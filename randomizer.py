@@ -11,53 +11,38 @@ def createParser ():
     parser.add_argument ('-f', '--file')
     parser.add_argument ('-p', '--parameter')
     return parser
-
-def ticket_rand(n, data, seed, forbidden):
-    hash1 = sha3.keccak_256()
-    arg = data + ' ' + seed
-    hash1.update(arg.encode('utf-8'))
-    hash1.update(hash1.hexdigest().encode('utf-8'))
-    hash1.update(hash1.hexdigest().encode('utf-8'))
-    hash1_int = int(hash1.hexdigest(), 16)
-    ticket = hash1_int % n
-    return ticket
  
 def ticket_rand2(n, data, seed, forbidden):
-    #hash1 = sha3.keccak_256()
     arg = data + ' ' + seed
     hash1 = hashlib.sha256(arg.encode('utf-8'))
     arg = hash1.hexdigest()
     hash1_int = int(hash1.hexdigest(), 16)
     ticket = hash1_int % n
-    # hash1 = hashlib.md5(arg.encode('utf-8'))
-    # hash2 = hashlib.md5(hash1.hexdigest().encode('utf-8'))
-    # hash3 = hashlib.md5(hash2.hexdigest().encode('utf-8'))
-    #for i in range(1):
     while ticket in forbidden:
         hash1 = hashlib.sha256(arg.encode('utf-8'))
         arg = hash1.hexdigest()
         hash1_int = int(hash1.hexdigest(), 16)
         ticket = hash1_int % n
-        print("tick : {}".format (data))
+        #print("tick : {}".format (data))
 
     forbidden += [ticket]
-    #ticket = hash1_int % n
     return ticket
  
 if __name__ == '__main__':
     parser = createParser()
     namespace = parser.parse_args(sys.argv[1:])
-    print("n= {}".format (namespace.numbilets) )
-    print("file= {}".format (namespace.file) )
-    print("param= {}\n\n".format (namespace.parameter) )
+    print("\nn={} file={} param={}\n".format (namespace.numbilets,namespace.file,namespace.parameter) )
+    #print("file= {}".format (namespace.file) )
+    #print("param= {}\n\n".format (namespace.parameter) )
     f = open(str(namespace.file), encoding='utf-8')
     taken = []
     for line in f:
     	print("{} : {}".format (line.strip(), 1+ticket_rand2(int(namespace.numbilets), line, namespace.parameter, taken)))
-    	# line.encode('utf-8')
-    print(taken)
+    #print(taken)
     
     # benchmarks =====================================================================
+
+    print("\n===BENCHMARKS(deltas of distribution 10k records) ===\n")
 
     a = [0]*int(namespace.numbilets)
     s_linear = [0]*int(namespace.numbilets)
