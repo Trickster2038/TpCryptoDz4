@@ -1,5 +1,3 @@
-print("=== WELCOME TO TICKETS RANDOMIZER ===")
-# python randomizer.py -n 3 -f list.txt -p 33
 import sys
 import argparse
 import sha3
@@ -29,6 +27,7 @@ def ticket_rand(n, data, seed, forbidden):
     return ticket
  
 if __name__ == '__main__':
+    print("=== WELCOME TO TICKETS RANDOMIZER ===")
     parser = createParser()
     namespace = parser.parse_args(sys.argv[1:])
     print("\nn={} file={} param={}\n".format (namespace.numbilets,namespace.file,namespace.parameter) )
