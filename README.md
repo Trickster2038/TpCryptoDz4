@@ -34,7 +34,7 @@ python randomizer.py -n 8 -f list.txt -p 1232
 ./randomizer.py -n 8 -f list.txt -p 1232
 ```
 ## Вывод консоли
-Вызов:
+Вызов (OS Windows):
 ```cmd
 python randomizer.py --numbilets 9 --file list.txt --parameter 12
 ```
