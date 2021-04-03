@@ -42,19 +42,20 @@ if __name__ == '__main__':
     print("\n=== BENCHMARKS(deltas of distribution 100k records) ===\n")
 
     a = [0]*int(namespace.numbilets)
-    s_linear = [0]*int(namespace.numbilets)
-    s_quadro = [0]*int(namespace.numbilets)
+    s_linear = 0
+    s_quadro = 0
 
     for y in range(100000):
     	i = ticket_rand(int(namespace.numbilets), str(y), namespace.parameter, [])
     	a[i] += 1
     for i in range(int(namespace.numbilets)):
-    	print("delta[ticket{}] {:10.3f}%".format (i, 100*((a[i] / 100000.0)- (1.0/int(namespace.numbilets)))))
-    	s_linear[i] = (100*((a[i] / 100000.0)- (1.0/int(namespace.numbilets)))) 
-    	s_quadro[i] = (100*((a[i] / 100000.0)- (1.0/int(namespace.numbilets)))) ** 2
+    	delta = abs(100*((a[i] / 100000.0)- (1.0/int(namespace.numbilets))))
+    	print("delta[ticket{}] {:10.3f}%".format (i, delta))
+    	s_linear += delta 
+    	s_quadro += delta ** 2
 
-    avg_delta = s_linear[i] / int(namespace.numbilets)
-    dispersion = s_quadro[i] / int(namespace.numbilets)
-    print("avg delta:     {:10.3f}%".format (avg_delta))
+    avg_delta = s_linear / int(namespace.numbilets)
+    dispersion = s_quadro / int(namespace.numbilets)
+    print("\navg delta:     {:10.3f}%".format (avg_delta))
     print("dispersion:    {:10.3f}%".format (dispersion))
         
