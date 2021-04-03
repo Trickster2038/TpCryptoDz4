@@ -1,6 +1,5 @@
 import sys
 import argparse
-import sha3
 import hashlib
  
 # creates commandline params parser
