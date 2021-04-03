@@ -15,6 +15,7 @@ def createParser ():
 def ticket_rand(n, data, seed, forbidden):
     """Returns unique ticket number in [0..n-1]
     You need to increment it by 1 if you want get [1..n] 
+    Throws Exception if there is no unique number 
     Function generate random number using sha256 hash of input data + seed
 
     Arguments:
@@ -24,16 +25,20 @@ def ticket_rand(n, data, seed, forbidden):
     forbidden[] - array of already taken tickets
 
     """
+    i = 0
     arg = data + ' ' + seed
     hash1 = hashlib.sha256(arg.encode('utf-8'))
     arg = hash1.hexdigest()
     hash1_int = int(hash1.hexdigest(), 16)
     ticket = hash1_int % n
     while ticket in forbidden:
+        i += 1
         hash1 = hashlib.sha256(arg.encode('utf-8'))
         arg = hash1.hexdigest()
         hash1_int = int(hash1.hexdigest(), 16)
         ticket = hash1_int % n
+        if i > 100:
+            raise Exception('''Can't find unique Num, try to make N(tickets) > length(file)''')
         # you can see each iteration with 'print("tick : {}".format (data))'
     forbidden += [ticket]
     return ticket
@@ -46,8 +51,12 @@ if __name__ == '__main__':
     f = open(str(namespace.file), encoding='utf-8')
     taken = []
     for line in f:
-        # here we increment ticket number by 1 to get it in [1..n]
-        print("{:35s}\t{}".format (line.strip()+':', 1 + ticket_rand(int(namespace.numbilets), line, namespace.parameter, taken)))
+        try: 
+            # here we increment ticket number by 1 to get it in [1..n]
+            print("{:35s}\t{}".format (line.strip()+':', 1 + ticket_rand(int(namespace.numbilets), line, namespace.parameter, taken)))
+        except Exception as exc:
+            print('Caught: ' + repr(exc))
+            quit()
     
     # benchmarks =====================================================================
 
