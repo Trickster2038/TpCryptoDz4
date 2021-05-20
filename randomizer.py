@@ -11,7 +11,7 @@ def createParser ():
     return parser
  
 
-def ticket_rand(n, data, seed, forbidden):
+def ticket_rand(n, data, seed):
     """Returns ticket number in [0..n-1]
     You need to increment it by 1 if you want get [1..n] 
     Throws Exception if there is no unique number 
@@ -36,14 +36,11 @@ if __name__ == '__main__':
     namespace = parser.parse_args(sys.argv[1:])
     print("\nn={} file={} param={}\n".format (namespace.numbilets,namespace.file,namespace.parameter) )
     f = open(str(namespace.file), encoding='utf-8')
-    taken = []
+
     for line in f:
-        try: 
-            # here we increment ticket number by 1 to get it in [1..n]
-            print("{:35s}\t{}".format (line.strip()+':', 1 + ticket_rand(int(namespace.numbilets), line.strip(), namespace.parameter, taken)))
-        except Exception as exc:
-            print('Caught: ' + repr(exc))
-            quit()
+        # here we increment ticket number by 1 to get it in [1..n]
+        print("{:35s}\t{}".format (line.strip()+':', 1 + ticket_rand(int(namespace.numbilets), line.strip(), namespace.parameter)))
+
     
     # benchmarks =====================================================================
 
