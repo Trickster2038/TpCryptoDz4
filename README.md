@@ -75,16 +75,22 @@ n=15 file=list.txt param=1232
 ```
 === BENCHMARKS(deltas of distribution for 100k records) ===
 
-delta[ticket0]      0.158%
-delta[ticket1]      0.016%
-delta[ticket2]      0.069%
-delta[ticket3]      0.254%
-delta[ticket4]      0.257%
-delta[ticket5]      0.058%
-delta[ticket6]      0.011%
-delta[ticket7]      0.124%
-delta[ticket8]      0.146%
+delta[ticket0]      0.016%
+delta[ticket1]      0.037%
+delta[ticket2]      0.029%
+delta[ticket3]      0.034%
+delta[ticket4]      0.067%
+delta[ticket5]      0.162%
+delta[ticket6]      0.194%
+delta[ticket7]      0.019%
+delta[ticket8]      0.047%
+delta[ticket9]      0.069%
+delta[ticket10]      0.029%
+delta[ticket11]      0.125%
+delta[ticket12]      0.140%
+delta[ticket13]      0.020%
+delta[ticket14]      0.041%
 
-avg delta:          0.121%
-dispersion:         0.022%
+avg delta:          0.069%
+dispersion:         0.008%
 ```

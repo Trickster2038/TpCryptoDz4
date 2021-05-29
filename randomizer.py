@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     # in cycle we count number of repeats of each ticket number in [0..n-1]
     for y in range(100000):
-        i = ticket_rand(int(namespace.numbilets), str(y), namespace.parameter, [])
+        i = ticket_rand(int(namespace.numbilets), str(y), namespace.parameter)
         tickets[i] += 1
 
     # in cycle we collect statistic metrics of numbers distribution
